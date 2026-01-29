@@ -5,5 +5,7 @@ description = "An agent-based system with code agent and review agent for automa
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "agno>=2.4.7",
+    "openai>=2.16.0",
     "pydantic-settings>=2.12.0",
 ]
