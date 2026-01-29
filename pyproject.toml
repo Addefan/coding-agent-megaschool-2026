@@ -4,4 +4,6 @@ version = "0.1.0"
 description = "An agent-based system with code agent and review agent for automating the SDLC in GitHub repositories."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "pydantic-settings>=2.12.0",
+]
