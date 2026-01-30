@@ -1,19 +1,18 @@
 from agno.agent import Agent
-from agno.models.openrouter import OpenRouter
-from agno.tools.reasoning import ReasoningTools
+from agno.models.openai import OpenAILike
 from agno.tools.file import FileTools
 from agno.tools.github import GithubTools
-
+from agno.tools.reasoning import ReasoningTools
 
 from settings import settings
 
 
 def get_agent():
     return Agent(
-        model=OpenRouter(
-            id=settings.openrouter.model,
-            base_url=settings.openrouter.base_url,
-            api_key=settings.openrouter.api_key,
+        model=OpenAILike(
+            id=settings.model.id,
+            base_url=settings.model.base_url,
+            api_key=settings.model.api_key,
         ),
         tools=[
             ReasoningTools(),

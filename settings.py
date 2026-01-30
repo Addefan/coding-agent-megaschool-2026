@@ -7,14 +7,14 @@ COMMON_CONFIG = {
 }
 
 
-class OpenRouterSettings(BaseSettings):
+class ModelSettings(BaseSettings):
     base_url: str = "https://openrouter.ai/api/v1"
     api_key: str
-    model: str
+    id: str
 
     model_config = SettingsConfigDict(
         **COMMON_CONFIG,
-        env_prefix="OPENROUTER_",
+        env_prefix="MODEL_",
     )
 
 
@@ -28,7 +28,7 @@ class GithubSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
-    openrouter: OpenRouterSettings = Field(default_factory=OpenRouterSettings)
+    model: ModelSettings = Field(default_factory=ModelSettings)
     github: GithubSettings = Field(default_factory=GithubSettings)
     debug: bool = False
 
