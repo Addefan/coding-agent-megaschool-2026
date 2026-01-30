@@ -1,0 +1,55 @@
+name: 'AI Coding & Reviewer Agents'
+description: 'An agent-based system with code agent and review agent for automating the SDLC in GitHub repositories.'
+author: 'Vitaly Zorin'
+branding:
+  icon: 'cpu'
+  color: 'purple'
+
+inputs:
+  mode:
+    description: 'Operation mode: "coder" or "reviewer"'
+    required: true
+  github_token:
+    description: 'GitHub Token (permissions: repo, workflow)'
+    required: true
+  model_api_key:
+    description: 'LLM API Key (OpenAI or compatible)'
+    required: true
+  model_id:
+    description: 'Model ID (name) to use (e.g., gpt-4, gpt-3.5-turbo)'
+    required: true
+
+  issue_number:
+    description: 'Issue number (required for coder mode)'
+    required: false
+  pr_number:
+    description: 'PR number (required for reviewer mode)'
+    required: false
+  model_base_url:
+    description: 'Base URL for the LLM API (if using a compatible service)'
+    required: false
+  debug:
+    description: 'Enable debug logs'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'docker'
+  image: 'docker://cr.yandex/crpugg3h45cgvu94nhip/agent:v1'
+  env:
+    GITHUB_TOKEN: ${{ inputs.github_token }}
+    MODEL_API_KEY: ${{ inputs.model_api_key }}
+    MODEL_ID: ${{ inputs.model_id }}
+    MODEL_BASE_URL: ${{ inputs.model_base_url }}
+    DEBUG: ${{ inputs.debug }}
+
+    GITHUB_REPOSITORY: ${{ github.repository }}
+    GITHUB_WORKSPACE: ${{ github.workspace }}
+
+  args:
+    - --mode
+    - ${{ inputs.mode }}
+    - ${{ inputs.issue_number != '' && '--issue' || '' }}
+    - ${{ inputs.issue_number }}
+    - ${{ inputs.pr_number != '' && '--pr' || '' }}
+    - ${{ inputs.pr_number }}
