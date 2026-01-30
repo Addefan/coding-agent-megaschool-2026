@@ -1,0 +1,6 @@
+services:
+  agent:
+    build:
+      context: .
+    env_file:
+      - .env
